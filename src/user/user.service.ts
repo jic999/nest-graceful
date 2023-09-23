@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { ConflictException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { RegisterDto } from 'src/common/dto/user.dto'
 import { User } from 'src/entity/user.entity'
@@ -18,7 +18,7 @@ export class UserService {
   public async register(registerDto: RegisterDto) {
     const isExist = await this.fetch(registerDto.username)
     if (isExist)
-      return { message: 'User already exists' }
+      throw new ConflictException('Username already exists')
     const user = this.user.create(registerDto)
     return this.user.save(user)
   }
