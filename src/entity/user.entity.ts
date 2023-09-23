@@ -1,9 +1,10 @@
-import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm'
-import { Exclude, Type } from 'class-transformer'
-import { IsEmail, IsIn, IsInt, IsNotEmpty, IsString, Length } from 'class-validator'
+import * as crypto from 'node:crypto'
+import { BeforeInsert, Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { IsEmail, IsIn, IsNotEmpty, IsString, Length } from 'class-validator'
+import { CryptoUtil, pwdCrypto } from 'src/common/utils/crypto'
 
-@Entity({ name: 'sys_user' })
-export class SysUser {
+@Entity({ name: 'user' })
+export class User {
   @PrimaryGeneratedColumn('uuid')
   @IsString()
   id: string
@@ -32,17 +33,22 @@ export class SysUser {
   @IsNotEmpty()
   avatar: string
 
-  @Column({ type: 'varchar', length: 30, nullable: true, comment: '盐' })
-  @Exclude()
-  salt: string
-
   @Column({ type: 'tinyint', default: 0, comment: '状态，0正常，1禁用' })
   @IsIn([0, 1])
   status: number
+
+  @Column({ type: 'varchar', length: 30, nullable: true, comment: '盐' })
+  salt: string
 
   @DeleteDateColumn()
   deleteAt: number
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   create_time: Date
+
+  @BeforeInsert()
+  beforeInsert() {
+    this.salt = CryptoUtil.generateSalt(8)
+    this.password = pwdCrypto.encrypt(this.password, this.salt)
+  }
 }
