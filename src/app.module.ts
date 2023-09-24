@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
-import { AuthController, AuthModule } from './auth'
+import { RouterModule } from '@nestjs/core'
+import { AuthModule } from './auth'
 import { configuration } from './config'
 import { UserModule } from './user'
+import { routes } from './routes'
+import { adminModules } from './admin'
 
 @Module({
   imports: [
+    RouterModule.register(routes),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
@@ -19,8 +23,8 @@ import { UserModule } from './user'
     }),
     UserModule,
     AuthModule,
+    ...adminModules,
   ],
-  controllers: [AuthController],
   providers: [],
 })
 export class AppModule {}

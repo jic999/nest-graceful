@@ -4,10 +4,10 @@ import { IntersectionType, OmitType, PartialType, PickType } from '@nestjs/mappe
 export function ValidationClassBuilder<T, N extends keyof T, E extends keyof T>(
   Entity: Type<T>,
   necessary: readonly N[] = [],
-  excludes: readonly E[] = [],
+  optional: readonly E[] = [],
 ) {
   return IntersectionType(
     PickType(Entity, necessary),
-    PartialType(OmitType(Entity, [...necessary, ...excludes])),
+    PartialType(PickType(Entity, optional)),
   )
 }

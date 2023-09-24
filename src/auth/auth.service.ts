@@ -22,6 +22,14 @@ export class AuthService {
     return result
   }
 
+  public async validateSysUser(username: string, password: string) {
+    const user = await this.user.fetchSysUser(username)
+    if (!user || !pwdCrypto.validate(password, user.salt, user.password))
+      return null
+    const { password: _, salt: __, ...result } = user
+    return result
+  }
+
   public validateRefreshToken(data: Payload, refreshToken: string): boolean {
     if (!this.jwt.verify(refreshToken, { secret: this.config.get('jwtRefreshSecret') }))
       return false

@@ -1,7 +1,7 @@
-export interface User {
-  id: number
+export interface IUser {
+  id: string
   username: string
   password: string
   email: string
-  roles: string[]
+  salt: string
 }

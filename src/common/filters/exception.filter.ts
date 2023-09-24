@@ -17,11 +17,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     }
 
     // log request info and error stack
-    Logger.warn(
-      `${request.method} ${request.url} ${status}`,
-      exception.stack,
-      GlobalExceptionFilter.name,
-    )
+    Logger.warn(`${request.method} ${request.url} ${status}`, GlobalExceptionFilter.name)
 
     response
       .status(status)
