@@ -1,5 +1,6 @@
 import { IsString, Length } from 'class-validator'
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { SysPermission } from './sys-permission.entity'
 
 @Entity({ name: 'sys_role' })
 export class SysRole {
@@ -12,5 +13,15 @@ export class SysRole {
   name: string
 
   @Column({ type: 'varchar', length: 255, nullable: true, comment: '角色描述' })
-  description: string
+  desc: string
+
+  @CreateDateColumn()
+  createdTime: Date
+
+  @UpdateDateColumn()
+  updatedTime: Date
+
+  @ManyToMany(() => SysPermission)
+  @JoinTable({ name: 'sys_role_permission' })
+  permissions: SysPermission[]
 }

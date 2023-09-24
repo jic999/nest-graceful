@@ -1,7 +1,7 @@
 import { Type } from '@nestjs/common'
-import { IntersectionType, OmitType, PartialType, PickType } from '@nestjs/mapped-types'
+import { IntersectionType, PartialType, PickType } from '@nestjs/mapped-types'
 
-export function ValidationClassBuilder<T, N extends keyof T, E extends keyof T>(
+export function ValidatorClassBuilder<T, N extends keyof T, E extends keyof T>(
   Entity: Type<T>,
   necessary: readonly N[] = [],
   optional: readonly E[] = [],

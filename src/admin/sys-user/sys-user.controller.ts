@@ -9,8 +9,8 @@ export class SysUserController {
   ) {}
 
   @Post()
-  public async create(@Body() createSysUserDto: CreateSysUserDto): Promise<null> {
-    await this.sysUserService.create(createSysUserDto)
+  public async create(@Body() body: CreateSysUserDto): Promise<null> {
+    await this.sysUserService.create(body)
     return null
   }
 }

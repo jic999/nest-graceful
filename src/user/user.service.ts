@@ -8,8 +8,10 @@ import { Repository } from 'typeorm'
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private user: Repository<User>,
-    @InjectRepository(SysUser) private sysUser: Repository<SysUser>,
+    @InjectRepository(User)
+    private user: Repository<User>,
+    @InjectRepository(SysUser)
+    private sysUser: Repository<SysUser>,
   ) {}
 
   public async fetch(username: string): Promise<User> {
@@ -17,11 +19,11 @@ export class UserService {
     return user
   }
 
-  public async register(registerDto: RegisterDto) {
-    const isExist = await this.fetch(registerDto.username)
+  public async register(data: RegisterDto) {
+    const isExist = await this.fetch(data.username)
     if (isExist)
       throw new ConflictException('Username already exists')
-    const user = this.user.create(registerDto)
+    const user = this.user.create(data)
     return this.user.save(user)
   }
 
