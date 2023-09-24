@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
-import { RouterModule } from '@nestjs/core'
+import { APP_GUARD, RouterModule } from '@nestjs/core'
 import { AuthModule } from './auth'
 import { configuration } from './config'
 import { UserModule } from './user'
 import { routes } from './routes'
 import { adminModules } from './admin'
+import { PermissionGuard } from './common/guards/permission.guard'
 
 @Module({
   imports: [
@@ -25,6 +26,11 @@ import { adminModules } from './admin'
     AuthModule,
     ...adminModules,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: PermissionGuard,
+    },
+  ],
 })
 export class AppModule {}

@@ -15,7 +15,10 @@ export class UserService {
   ) {}
 
   public async fetch(username: string): Promise<User> {
-    const user = await this.user.findOneBy({ username })
+    const user = await this.user.findOne({
+      where: { username },
+      select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+    })
     return user
   }
 
@@ -30,7 +33,10 @@ export class UserService {
   // ------------------- sys user -------------------
 
   public async fetchSysUser(username: string): Promise<SysUser> {
-    const user = await this.sysUser.findOneBy({ username })
+    const user = await this.sysUser.findOne({
+      where: { username },
+      select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+    })
     return user
   }
 }

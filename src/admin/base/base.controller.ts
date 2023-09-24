@@ -2,6 +2,7 @@ import { Body, Controller, Get, Headers, Post, Query, UnauthorizedException } fr
 import { AuthService } from 'src/auth'
 import { LoginDto } from 'src/common/dto'
 import { UserService } from 'src/user'
+import { Public } from '@/common/decorators'
 
 @Controller()
 export class AdminBaseController {
@@ -11,6 +12,7 @@ export class AdminBaseController {
   ) {}
 
   @Post('login')
+  @Public()
   public async login(@Body() loginDto: LoginDto) {
     const user = await this.authService.validateSysUser(loginDto.username, loginDto.password)
     if (!user)

@@ -17,7 +17,7 @@ export class BaseUser {
   @Length(1, 30)
   nickname: string
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 100, select: false })
   @IsString()
   @Length(6, 30)
   password: string
@@ -35,7 +35,7 @@ export class BaseUser {
   @IsIn([0, 1])
   status: number
 
-  @Column({ type: 'varchar', length: 30, nullable: true, comment: '盐' })
+  @Column({ type: 'varchar', length: 30, nullable: true, select: false, comment: '盐' })
   salt: string
 
   @DeleteDateColumn()

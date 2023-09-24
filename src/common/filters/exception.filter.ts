@@ -7,7 +7,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp()
     const request = ctx.getRequest<Request>()
     const response = ctx.getResponse<Response>()
-    const status = exception?.getStatus() || HttpStatus.INTERNAL_SERVER_ERROR
+    const status = exception.getStatus ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR
     let message = exception.message
 
     // validation exception
@@ -17,7 +17,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     }
 
     // log request info and error stack
-    Logger.warn(`${request.method} ${request.url} ${status}`, GlobalExceptionFilter.name)
+    Logger.warn(`${request.method} ${request.url} ${status} ${message}`, GlobalExceptionFilter.name)
 
     response
       .status(status)
