@@ -34,8 +34,8 @@ export class AuthService {
     const payload: JwtPayload = { sub: data.userId, username: data.username, roles: data.roles }
 
     return {
-      access_token: this.jwt.sign(payload),
-      refresh_token: this.getRefreshToken(payload.sub),
+      accessToken: this.jwt.sign(payload),
+      refreshToken: this.getRefreshToken(payload.sub),
     }
   }
 

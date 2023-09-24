@@ -7,12 +7,12 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp()
     const request = ctx.getRequest<Request>()
     const response = ctx.getResponse<Response>()
-    const status = exception.getStatus() || HttpStatus.INTERNAL_SERVER_ERROR
+    const status = exception?.getStatus() || HttpStatus.INTERNAL_SERVER_ERROR
     let message = exception.message
 
     // validation exception
     if (exception instanceof BadRequestException) {
-      const errMessage = (exception.getResponse() as any)?.message as string[]
+      const errMessage = (exception?.getResponse() as any)?.message as string[]
       message = errMessage ? errMessage.join(', ') : message
     }
 

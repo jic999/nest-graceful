@@ -1,6 +1,6 @@
 export interface JwtSign {
-  access_token: string
-  refresh_token: string
+  accessToken: string
+  refreshToken: string
 }
 
 export interface JwtPayload {
