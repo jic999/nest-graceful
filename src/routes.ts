@@ -1,7 +1,9 @@
 import { Routes } from '@nestjs/core'
-import { adminModules } from './admin'
+import { AdminModule } from './admin/admin.module'
 
-export const routes: Routes = adminModules.map(module => ({
-  path: 'admin',
-  module,
-}))
+export const routes: Routes = [
+  {
+    path: 'admin',
+    module: AdminModule,
+  },
+]
