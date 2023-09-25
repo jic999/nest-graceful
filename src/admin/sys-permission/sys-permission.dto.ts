@@ -6,3 +6,14 @@ export class CreateSysPermissionDto extends ValidatorClassBuilder(
   ['name'],
   ['desc'],
 ) {}
+
+export class UpdateSysPermissionDto extends ValidatorClassBuilder(
+  SysPermission,
+  ['id'],
+  ['name', 'desc'],
+) {}
+
+export class SysPermissionIdDto extends ValidatorClassBuilder(
+  SysPermission,
+  ['id'],
+) {}

@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
 import { SysUserService } from './sys-user.service'
-import { AssignRoleDto, CreateSysUserDto } from './sys-user.dto'
+import { AssignRoleDto, CreateSysUserDto, UpdateSysUserDto } from './sys-user.dto'
 import { SysUser } from '@/entity/sys-user.entity'
 import { Permission } from '@/common/decorators'
+import { UserIdDto } from '@/common/dto'
 
 @Controller('sys-user')
 export class SysUserController {
@@ -15,6 +16,26 @@ export class SysUserController {
   public async create(@Body() body: CreateSysUserDto): Promise<null> {
     await this.sysUserService.create(body)
     return null
+  }
+
+  @Patch()
+  @Permission('sys:user:update')
+  public async update(@Body() body: UpdateSysUserDto): Promise<null> {
+    await this.sysUserService.update(body)
+    return null
+  }
+
+  @Delete(':id')
+  @Permission('sys:user:delete')
+  public async remove(@Param() param: UserIdDto): Promise<null> {
+    await this.sysUserService.remove(param.id)
+    return null
+  }
+
+  @Get(':id')
+  @Permission('sys:user:read')
+  public async fetch(@Param() param: UserIdDto): Promise<SysUser> {
+    return this.sysUserService.fetch(param.id)
   }
 
   @Get()

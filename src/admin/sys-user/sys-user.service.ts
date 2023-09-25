@@ -1,8 +1,8 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { SysUser } from 'src/entity/sys-user.entity'
-import { In, Repository } from 'typeorm'
-import { AssignRoleDto, CreateSysUserDto } from './sys-user.dto'
+import { In, Not, Repository } from 'typeorm'
+import { AssignRoleDto, CreateSysUserDto, UpdateSysUserDto } from './sys-user.dto'
 import { SysRole } from '@/entity/sys-role.entity'
 
 @Injectable()
@@ -26,11 +26,35 @@ export class SysUserService {
     return this.sysUser.save(user)
   }
 
+  public async update(data: UpdateSysUserDto): Promise<SysUser> {
+    const user = await this.sysUser.findOneBy({ id: data.id })
+    if (!user)
+      throw new ConflictException('User does not exist')
+    if (
+      data.username
+      && data.username !== user.username
+      && this.sysUser.exist({ where: { username: data.username, id: Not(data.id) } })
+    )
+      throw new ConflictException('Username already exists')
+    return this.sysUser.save(Object.assign(user, data))
+  }
+
+  public async remove(id: string): Promise<SysUser> {
+    const user = await this.sysUser.findOneBy({ id })
+    if (!user)
+      throw new ConflictException('User does not exist')
+    return await this.sysUser.softRemove(user)
+  }
+
+  public async fetch(id: string): Promise<SysUser> {
+    return this.sysUser.findOneBy({ id })
+  }
+
   public async findAll(): Promise<SysUser[]> {
     return this.sysUser.find()
   }
 
-  public async findPermissionNames(id: string) {
+  public async findPermissionNames(id: string): Promise<string[]> {
     const user = await this.sysUser.findOne({
       where: { id },
       relations: ['roles', 'roles.permissions'],
@@ -39,7 +63,7 @@ export class SysUserService {
     return Array.from(new Set(permissions.flat()))
   }
 
-  public async assignRole(data: AssignRoleDto) {
+  public async assignRole(data: AssignRoleDto): Promise<SysUser> {
     const user = await this.sysUser.findOneBy({ id: data.id })
     if (!user)
       throw new ConflictException('User does not exist')
