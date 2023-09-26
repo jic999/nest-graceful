@@ -16,4 +16,5 @@ export class UpdateSysPermissionDto extends ValidatorClassBuilder(
 export class SysPermissionIdDto extends ValidatorClassBuilder(
   SysPermission,
   ['id'],
+  [],
 ) {}
