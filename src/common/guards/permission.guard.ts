@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
-import { Observable } from 'rxjs'
 import { AuthService } from '@/auth'
 import { SysUserService } from '@/admin/sys-user/sys-user.service'
 
@@ -34,6 +33,7 @@ export class PermissionGuard implements CanActivate {
       throw new UnauthorizedException('Invalid token')
     // check permission
     const perms = await this.sysUserService.findPermissionNames(payload.userId)
+    // TODO cache user perms
     const pass = requiredPermissions.every(item => perms.includes(item))
     if (!pass)
       throw new ForbiddenException('No permission')
