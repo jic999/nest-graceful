@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
 import { SysPermissionService } from './sys-permission.service'
 import { CreateSysPermissionDto, SysPermissionIdDto, UpdateSysPermissionDto } from './sys-permission.dto'
 import { Permission } from '@/common/decorators'
 
-@Controller('sys-permission')
+@Controller('sys-perm')
 export class SysPermissionController {
   constructor(
     private sysPermissionService: SysPermissionService,
@@ -23,14 +23,14 @@ export class SysPermissionController {
 
   @Delete(':id')
   @Permission('sys:perm:delete')
-  public remove(@Body() body: SysPermissionIdDto) {
-    return this.sysPermissionService.remove(body.id)
+  public remove(@Param() param: SysPermissionIdDto) {
+    return this.sysPermissionService.remove(param.id)
   }
 
   @Get(':id')
   @Permission('sys:perm:read')
-  public fetch(@Body() body: SysPermissionIdDto) {
-    return this.sysPermissionService.fetch(body.id)
+  public fetch(@Param() param: SysPermissionIdDto) {
+    return this.sysPermissionService.fetch(param.id)
   }
 
   @Get()

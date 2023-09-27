@@ -1,9 +1,8 @@
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { SysUser } from 'src/entity/sys-user.entity'
 import { In, Not, Repository } from 'typeorm'
-import { AssignRoleDto, CreateSysUserDto, UpdateSysUserDto } from './sys-user.dto'
-import { SysRole } from '@/entity/sys-role.entity'
+import { AssignRolesDto, CreateSysUserDto, UpdateSysUserDto } from './sys-user.dto'
+import { SysRole, SysUser } from '@/entity'
 
 @Injectable()
 export class SysUserService {
@@ -66,7 +65,7 @@ export class SysUserService {
     return Array.from(new Set(permissions.flat()))
   }
 
-  public async assignRole(data: AssignRoleDto): Promise<SysUser> {
+  public async assignRoles(data: AssignRolesDto): Promise<SysUser> {
     const user = await this.sysUser.findOneBy({ id: data.id })
     if (!user)
       throw new ConflictException('User does not exist')

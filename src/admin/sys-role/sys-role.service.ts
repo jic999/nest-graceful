@@ -2,8 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { In, Repository } from 'typeorm'
 import { ConflictException, Injectable } from '@nestjs/common'
 import { AssignPermsDto, CreateSysRoleDto, UpdateSysRoleDto } from './sys-role.dto'
-import { SysRole } from '@/entity/sys-role.entity'
-import { SysPermission } from '@/entity/sys-permission.entity'
+import { SysPermission, SysRole } from '@/entity'
 
 @Injectable()
 export class SysRoleService {
@@ -17,10 +16,10 @@ export class SysRoleService {
   public async create(data: CreateSysRoleDto): Promise<SysRole> {
     if (await this.sysRole.exist({ where: { name: data.name } }))
       throw new ConflictException('Role name already exists')
-    const { permissions, ...roleInfo } = data
+    const { permIds, ...roleInfo } = data
     const role = this.sysRole.create(roleInfo)
-    if (permissions) {
-      const perms = await this.sysPermission.findBy({ id: In(permissions) })
+    if (permIds?.length) {
+      const perms = await this.sysPermission.findBy({ id: In(permIds) })
       role.permissions = perms
     }
     return this.sysRole.save(role)
@@ -52,7 +51,7 @@ export class SysRoleService {
     const role = await this.sysRole.findOneBy({ id: data.id })
     if (!role)
       throw new ConflictException('Role does not exist')
-    const perms = await this.sysPermission.findBy({ id: In(data.perms) })
+    const perms = await this.sysPermission.findBy({ id: In(data.permIds) })
     role.permissions = perms
     return this.sysRole.save(role)
   }

@@ -1,4 +1,4 @@
-import { IsNumber } from 'class-validator'
+import { IsNumber, IsOptional } from 'class-validator'
 import { PickType } from '@nestjs/mapped-types'
 import { ValidatorClassBuilder } from '@/common/dto'
 import { SysRole } from '@/entity/sys-role.entity'
@@ -9,7 +9,8 @@ export class CreateSysRoleDto extends ValidatorClassBuilder(
   ['desc'],
 ) {
   @IsNumber({}, { each: true })
-  permissions?: number[]
+  @IsOptional()
+  permIds?: number[]
 }
 
 export class UpdateSysRoleDto extends ValidatorClassBuilder(
@@ -25,5 +26,5 @@ export class AssignPermsDto extends ValidatorClassBuilder(
   [],
 ) {
   @IsNumber({}, { each: true })
-  perms: number[]
+  permIds: number[]
 }

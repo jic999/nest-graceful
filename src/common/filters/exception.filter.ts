@@ -13,7 +13,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     // validation exception
     if (exception instanceof BadRequestException) {
       const errMessage = (exception?.getResponse() as any)?.message as string[]
-      message = errMessage ? errMessage.join(', ') : message
+      message = Array.isArray(errMessage) ? errMessage.join(', ') : message
     }
 
     // log request info and error stack

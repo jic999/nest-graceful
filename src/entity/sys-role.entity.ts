@@ -1,10 +1,12 @@
 import { IsNumber, IsString, Length } from 'class-validator'
+import { Type } from 'class-transformer'
 import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { SysPermission } from './sys-permission.entity'
 
 @Entity({ name: 'sys_role' })
 export class SysRole {
   @PrimaryGeneratedColumn('increment')
+  @Type(() => Number)
   @IsNumber()
   id: number
 

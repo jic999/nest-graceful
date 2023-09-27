@@ -15,7 +15,7 @@ export class UpdateSysUserDto extends ValidatorClassBuilder(
   ['username', 'nickname', 'email', 'avatar', 'status'],
 ) {}
 
-export class AssignRoleDto extends PickType(SysUser, ['id']) {
+export class AssignRolesDto extends PickType(SysUser, ['id']) {
   @IsNumber({}, { each: true })
   roleIds: number[]
 }

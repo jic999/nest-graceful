@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { SysPermission } from '@entity/sys-permission.entity'
 import { Repository } from 'typeorm'
+import { SysPermission } from '@entity'
 import { CreateSysPermissionDto, UpdateSysPermissionDto } from './sys-permission.dto'
 
 @Injectable()
@@ -23,7 +23,7 @@ export class SysPermissionService {
 
   public async remove(id: number): Promise<SysPermission> {
     const perm = await this.sysPermission.findOneBy({ id })
-    return await this.sysPermission.softRemove(perm)
+    return await this.sysPermission.remove(perm)
   }
 
   public async fetch(id: number): Promise<SysPermission> {

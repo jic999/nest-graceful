@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
 import { SysUserService } from './sys-user.service'
-import { AssignRoleDto, CreateSysUserDto, UpdateSysUserDto } from './sys-user.dto'
-import { SysUser } from '@/entity/sys-user.entity'
+import { AssignRolesDto, CreateSysUserDto, UpdateSysUserDto } from './sys-user.dto'
+import { SysUser } from '@/entity'
 import { Permission } from '@/common/decorators'
 import { UserIdDto } from '@/common/dto'
 
@@ -44,10 +44,10 @@ export class SysUserController {
     return this.sysUserService.findAll()
   }
 
-  @Post('assignRole')
-  @Permission('sys:user:assignRole')
-  public async assignRole(@Body() body: AssignRoleDto): Promise<null> {
-    await this.sysUserService.assignRole(body)
+  @Post('assignRoles')
+  @Permission('sys:user:assignRoles')
+  public async assignRoles(@Body() body: AssignRolesDto): Promise<null> {
+    await this.sysUserService.assignRoles(body)
     return null
   }
 }
