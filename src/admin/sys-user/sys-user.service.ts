@@ -72,4 +72,8 @@ export class SysUserService {
     user.roles = roles
     return this.sysUser.save(user)
   }
+
+  public async getCount(): Promise<number> {
+    return this.sysUser.count()
+  }
 }

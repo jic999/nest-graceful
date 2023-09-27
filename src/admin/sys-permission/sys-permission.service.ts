@@ -33,4 +33,10 @@ export class SysPermissionService {
   public async findAll(): Promise<SysPermission[]> {
     return await this.sysPermission.find()
   }
+
+  // ------------------ dev api ------------------
+  public async batchCreate(data: CreateSysPermissionDto[]): Promise<SysPermission[]> {
+    const perms = this.sysPermission.create(data)
+    return await this.sysPermission.save(perms)
+  }
 }

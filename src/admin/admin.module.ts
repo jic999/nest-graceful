@@ -9,6 +9,7 @@ import { SysUserController } from './sys-user/sys-user.controller'
 import { SysRoleController } from './sys-role/sys-role.controller'
 import { SysPermissionController } from './sys-permission/sys-permission.controller'
 import { AdminBaseController } from './base/base.controller'
+import { AdminService } from './admin.service'
 import { UserModule } from '@/user'
 
 @Module({
@@ -27,10 +28,12 @@ import { UserModule } from '@/user'
     SysPermissionController,
   ],
   providers: [
+    AdminService,
     {
       provide: APP_GUARD,
       useClass: PermissionGuard,
     },
   ],
+  exports: [AdminService],
 })
 export class AdminModule {}
