@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common'
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { SysUser } from 'src/entity/sys-user.entity'
 import { In, Not, Repository } from 'typeorm'
@@ -47,7 +47,10 @@ export class SysUserService {
   }
 
   public async fetch(id: string): Promise<SysUser> {
-    return this.sysUser.findOneBy({ id })
+    const user = await this.sysUser.findOneBy({ id })
+    if (!user)
+      throw new BadRequestException('User does not exist')
+    return user
   }
 
   public async findAll(): Promise<SysUser[]> {

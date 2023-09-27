@@ -45,6 +45,7 @@ export class SysUserController {
   }
 
   @Post('assignRole')
+  @Permission('sys:user:assignRole')
   public async assignRole(@Body() body: AssignRoleDto): Promise<null> {
     await this.sysUserService.assignRole(body)
     return null
