@@ -22,6 +22,14 @@ export class UserService {
     return user
   }
 
+  public async fetchById(id: string): Promise<User> {
+    const user = await this.user.findOne({
+      where: { id },
+      select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+    })
+    return user
+  }
+
   public async register(data: RegisterDto) {
     const isExist = await this.fetch(data.username)
     if (isExist)
@@ -35,6 +43,14 @@ export class UserService {
   public async fetchSysUser(username: string): Promise<SysUser> {
     const user = await this.sysUser.findOne({
       where: { username },
+      select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
+    })
+    return user
+  }
+
+  public async fetchSysUserById(id: string): Promise<SysUser> {
+    const user = await this.sysUser.findOne({
+      where: { id },
       select: ['id', 'username', 'password', 'salt', 'email', 'nickname', 'avatar', 'status'],
     })
     return user
