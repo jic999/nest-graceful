@@ -39,10 +39,10 @@ export class BaseUser {
   salt: string
 
   @DeleteDateColumn()
-  deleteAt: number
+  deleteTime: number
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  create_time: Date
+  createTime: Date
 
   @BeforeInsert()
   beforeInsert() {

@@ -1,5 +1,8 @@
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
+
 export const config = {
   db: {
+    namingStrategy: new SnakeNamingStrategy(),
     // entities: [`${__dirname}/../../entity/**/*.{js,ts}`],
     // subscribers: [`${__dirname}/../../subscriber/**/*.{js,ts}`],
     // migrations: [`${__dirname}/../../migration/**/*.{js,ts}`],

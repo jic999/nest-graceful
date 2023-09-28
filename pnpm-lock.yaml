@@ -47,6 +47,9 @@ dependencies:
   typeorm:
     specifier: ^0.3.17
     version: registry.npmmirror.com/typeorm@0.3.17(mysql2@3.6.1)(ts-node@10.9.1)
+  typeorm-naming-strategies:
+    specifier: ^4.1.0
+    version: registry.npmmirror.com/typeorm-naming-strategies@4.1.0(typeorm@0.3.17)
 
 devDependencies:
   '@antfu/eslint-config':
@@ -7509,6 +7512,17 @@ packages:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/typedarray/-/typedarray-0.0.6.tgz}
     name: typedarray
     version: 0.0.6
+
+  registry.npmmirror.com/typeorm-naming-strategies@4.1.0(typeorm@0.3.17):
+    resolution: {integrity: sha512-vPekJXzZOTZrdDvTl1YoM+w+sUIfQHG4kZTpbFYoTsufyv9NIBRe4Q+PdzhEAFA2std3D9LZHEb1EjE9zhRpiQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/typeorm-naming-strategies/-/typeorm-naming-strategies-4.1.0.tgz}
+    id: registry.npmmirror.com/typeorm-naming-strategies/4.1.0
+    name: typeorm-naming-strategies
+    version: 4.1.0
+    peerDependencies:
+      typeorm: ^0.2.0 || ^0.3.0
+    dependencies:
+      typeorm: registry.npmmirror.com/typeorm@0.3.17(mysql2@3.6.1)(ts-node@10.9.1)
+    dev: false
 
   registry.npmmirror.com/typeorm@0.3.17(mysql2@3.6.1)(ts-node@10.9.1):
     resolution: {integrity: sha512-UDjUEwIQalO9tWw9O2A4GU+sT3oyoUXheHJy4ft+RFdnRdQctdQ34L9SqE2p7LdwzafHx1maxT+bqXON+Qnmig==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/typeorm/-/typeorm-0.3.17.tgz}

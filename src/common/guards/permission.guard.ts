@@ -37,7 +37,6 @@ export class PermissionGuard implements CanActivate {
     const pass = requiredPermissions.every(item => perms.includes(item))
     if (!pass)
       throw new ForbiddenException('No permission')
-
     return true
   }
 }
