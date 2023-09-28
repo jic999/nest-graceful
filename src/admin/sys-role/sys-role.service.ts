@@ -36,7 +36,7 @@ export class SysRoleService {
     const role = await this.sysRole.findOneBy({ id })
     if (!role)
       throw new ConflictException('Role does not exist')
-    return this.sysRole.softRemove(role)
+    return this.sysRole.remove(role)
   }
 
   public async fetch(id: number): Promise<SysRole> {
