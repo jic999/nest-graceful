@@ -14,8 +14,8 @@ export class SysRoleService {
   ) {}
 
   public async create(data: CreateSysRoleDto): Promise<SysRole> {
-    if (await this.sysRole.exist({ where: { name: data.name } }))
-      throw new ConflictException('Role name already exists')
+    if (await this.sysRole.exist({ where: { code: data.code } }))
+      throw new ConflictException('Role code already exists')
     const { permIds, ...roleInfo } = data
     const role = this.sysRole.create(roleInfo)
     if (permIds?.length) {

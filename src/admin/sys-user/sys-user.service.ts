@@ -61,7 +61,7 @@ export class SysUserService {
       where: { id },
       relations: ['roles', 'roles.permissions'],
     })
-    const permissions = user.roles.map(role => role.permissions.map(permission => permission.name))
+    const permissions = user.roles.map(role => role.permissions.map(permission => permission.code))
     return Array.from(new Set(permissions.flat()))
   }
 
