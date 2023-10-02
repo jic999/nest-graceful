@@ -28,7 +28,7 @@ export class AdminBaseController {
     const payload = this.authService.getPayload(token)
     if (!payload?.username)
       throw new UnauthorizedException('Invalid token')
-    const { salt: _, password: __, ...userInfo } = await this.userService.fetchSysUser(payload.username)
+    const { salt: _, password: __, ...userInfo } = await this.userService.getSysUserByUsername(payload.username)
     return userInfo
   }
 
@@ -37,7 +37,7 @@ export class AdminBaseController {
     const payload = this.authService.getPayload(token)
     if (!payload?.userId || !this.authService.validateRefreshToken(payload, token))
       throw new UnauthorizedException('Invalid token')
-    const user = await this.userService.fetchSysUserById(payload.userId)
+    const user = await this.userService.getSysUserById(payload.userId)
     return this.authService.jwtSign({ userId: user.id, username: user.username })
   }
 }
